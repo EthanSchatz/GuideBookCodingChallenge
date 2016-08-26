@@ -17,6 +17,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
+    NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:300 * 1024 * 1024
+                                                      diskCapacity:300 * 1024 * 1024
+                                                          diskPath:@"GBDiskPath"];
+    [NSURLCache setSharedURLCache:cache];
+    
     GuideBookViewController *viewController = [GuideBookViewController GuideBookViewController];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];

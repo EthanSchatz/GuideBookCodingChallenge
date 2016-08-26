@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class Guide;
+
 @interface GuideTableViewCell : UITableViewCell
+
+- (void)configureCellWithGuide:(Guide *)guide;
+
++ (NSString *)reuseIdentifier;
 
 @end

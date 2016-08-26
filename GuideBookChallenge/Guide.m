@@ -21,6 +21,8 @@
 
 @property (nonatomic, readwrite) NSDate *endDate;
 
+@property (nonatomic, readwrite) NSString *iconURLString;
+
 @end
 
 @implementation Guide
@@ -29,13 +31,16 @@
                     city:(NSString *) city
                    state:(NSString *) state
                startDate:(NSDate *) startDate
-                 endDate:(NSDate *) endDate {
+                 endDate:(NSDate *) endDate
+                 iconURLString:(NSString *)iconURLString {
+    
     Guide *result = [[Guide alloc] init];
     result.name = name;
     result.city = city;
     result.state = state;
     result.startDate = startDate;
     result.endDate = endDate;
+    result.iconURLString = iconURLString;
     
     return result;
 }

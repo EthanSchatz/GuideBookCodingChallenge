@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "Guide.h"
 #import "GBDateFormatter.h"
+#import "GuideTableViewCell.h"
 
 @interface GuideBookViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -35,9 +36,13 @@
     
     [self setTitle:@"Guides"];
     [self getGuides];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame: CGRectZero];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.tableFooterView = [[UIView alloc] initWithFrame: CGRectZero];
+    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    UINib *nib = [UINib nibWithNibName:@"GuideTableViewCell" bundle:nil];
+    [_tableView registerNib:nib forCellReuseIdentifier:[GuideTableViewCell reuseIdentifier]];
     
     _refreshControl = [[UIRefreshControl alloc] init];
     _refreshControl.backgroundColor = [UIColor colorWithRed:0.0 green:0.3 blue:0.6 alpha:1.0];
@@ -89,14 +94,12 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GuideBookCell"];
+    GuideTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[GuideTableViewCell reuseIdentifier]];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"GuideBookCell"];
+        cell = [[GuideTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"GuideBookCell"];
     }
     Guide *guide = _guides[indexPath.section][indexPath.row];
-    cell.textLabel.text = [guide name];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Ends - %@ : %@",[guide endDateString], [guide cityState]];
-    cell.backgroundColor = [UIColor whiteColor];
+    [cell configureCellWithGuide:guide];
     
     return cell;
 }
@@ -158,6 +161,7 @@
                     NSDate *startDate = [self dateFromString:[dataDict objectForKey:@"startDate"]];
                     NSDate *endDate = [self dateFromString:[dataDict objectForKey:@"endDate"]];
                     NSString *name = [dataDict objectForKey:@"name"];
+                    NSString *iconURLString = [dataDict objectForKey:@"icon"];
                     
                     NSDictionary *venueDict = [dataDict objectForKey:@"venue"];
                     NSString *city = [venueDict objectForKey:@"city"];
@@ -166,7 +170,8 @@
                                                           city:city
                                                          state:state
                                                      startDate:startDate
-                                                       endDate:endDate];
+                                                       endDate:endDate
+                                                 iconURLString:iconURLString];
                     [guides addObject:guide];
                 }
             }

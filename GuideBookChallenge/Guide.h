@@ -20,6 +20,8 @@
 
 @property (nonatomic, readonly) NSDate *endDate;
 
+@property (nonatomic, readonly) NSString *iconURLString;
+
 - (NSString *)name;
 
 - (NSString *)city;
@@ -36,6 +38,7 @@
                     city:(NSString *) city
                    state:(NSString *) state
                startDate:(NSDate *) startDate
-                 endDate:(NSDate *) endDate;
+                 endDate:(NSDate *) endDate
+                 iconURLString:(NSString *)iconURLString;
 
 @end
