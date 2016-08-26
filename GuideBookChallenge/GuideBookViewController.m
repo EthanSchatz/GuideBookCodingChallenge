@@ -119,7 +119,7 @@
     [title setTextColor:[UIColor blackColor]];
     [title setTextAlignment:NSTextAlignmentCenter];
     Guide *guide = _guides[section][0];
-    title.text = [guide endDateString];
+    title.text = [guide startDateString];
     [header addSubview:title];
     
     return header;
@@ -188,7 +188,7 @@
     NSMutableDictionary *sections = [NSMutableDictionary dictionary];
     
     for (Guide *guide in array) {
-        NSString *dateString = [guide endDateString];
+        NSString *dateString = [guide startDateString];
         NSMutableArray *sectionArray = sections[dateString];
         if (!sectionArray) {
             sectionArray = [NSMutableArray array];
@@ -200,15 +200,22 @@
     
     NSMutableArray *guides = [NSMutableArray array];
     for (id key in sections) {
-        [guides addObject:sections[key]];
+        NSMutableArray *section = sections[key];
+        NSArray *sortedSection = [section sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            NSDate *first = [(Guide *)a endDate];
+            NSDate *second = [(Guide *)b endDate];
+            return [first compare:second];
+        }];
+        [guides addObject:sortedSection];
     }
     
     NSArray *sortedGuides;
     sortedGuides = [guides sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSDate *first = [(Guide *)a[0] endDate];
-        NSDate *second = [(Guide *)b[0] endDate];
+        NSDate *first = [(Guide *)a[0] startDate];
+        NSDate *second = [(Guide *)b[0] startDate];
         return [first compare:second];
     }];
+    
     
     return sortedGuides;
 }
