@@ -70,7 +70,7 @@
 }
 
 - (NSString *)cityState {
-    NSString *result = @"";
+    NSString *result = @": ";
     NSString *city = [self city];
     NSString *state = [self state];
     if (city.length > 0) {
@@ -82,7 +82,7 @@
     } else if (state.length > 0) {
         result = [result stringByAppendingString:[NSString stringWithFormat:@"%@",state]];
     } else {
-        result = @"Location Unknown";
+        result = @"";
     }
     return result;
 }

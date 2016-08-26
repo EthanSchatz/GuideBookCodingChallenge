@@ -27,7 +27,7 @@
 
 - (void)configureCellWithGuide:(Guide *)guide {
     _titleLabel.text = [guide name];
-    _detailLabel.text = [NSString stringWithFormat:@"Ends - %@ : %@",[guide endDateString], [guide cityState]];
+    _detailLabel.text = [NSString stringWithFormat:@"Ends - %@%@",[guide endDateString], [guide cityState]];
     [self loadImageWithURLString:guide.iconURLString];
 }
 
