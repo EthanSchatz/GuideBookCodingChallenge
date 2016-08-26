@@ -20,6 +20,18 @@
 
 @property (nonatomic, readonly) NSDate *endDate;
 
+- (NSString *)name;
+
+- (NSString *)city;
+
+- (NSString *)state;
+
+- (NSString *)cityState;
+
+- (NSString *)startDateString;
+
+- (NSString *)endDateString;
+
 - (Guide *) initWithName:(NSString *) name
                     city:(NSString *) city
                    state:(NSString *) state

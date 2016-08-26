@@ -7,10 +7,17 @@
 //
 
 #import "GuideBookViewController.h"
+#import "AFNetworking.h"
+#import "Guide.h"
+#import "GBDateFormatter.h"
 
 @interface GuideBookViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (nonatomic) NSArray *guides;
+
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -25,9 +32,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setTitle:@"Guides"];
+    [self getGuides];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame: CGRectZero];
+    
+    _refreshControl = [[UIRefreshControl alloc] init];
+    _refreshControl.backgroundColor = [UIColor colorWithRed:0.0 green:0.3 blue:0.6 alpha:1.0];
+    _refreshControl.tintColor = [UIColor whiteColor];
+    [_refreshControl addTarget:self action:@selector(getGuides) forControlEvents:UIControlEventValueChanged];
+    [_tableView addSubview:_refreshControl];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,12 +53,38 @@
 
 #pragma mark - Table view data source
 
+- (void) updateGUIWithProcessInfo {
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        _refreshControl.backgroundColor = [UIColor colorWithRed:0.0 green:0.3 blue:0.6 alpha:1.0];
+    }];
+    [_tableView reloadData];
+    
+    if (_refreshControl) {
+        NSDateFormatter *df = [[GBDateFormatter sharedInstance] timeFormatter];
+        NSString *title = [NSString stringWithFormat:@"Last Update: %@", [df stringFromDate:[NSDate date]]];
+        NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+                                                                    forKey:NSForegroundColorAttributeName];
+        NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+        self.refreshControl.attributedTitle = attributedTitle;
+        
+        [self.refreshControl endRefreshing];
+    }
+}
+
+- (void)animateRefreshControl {
+    [UIView animateWithDuration:0.2 animations:^{
+        _refreshControl.backgroundColor = [UIColor colorWithRed:0.0 green:0.5 blue:0.8 alpha:1.0];
+    }];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return _guides.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    NSMutableArray *guides = _guides[section];
+    return guides.count;
 }
 
 
@@ -51,35 +93,125 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"GuideBookCell"];
     }
-    cell.textLabel.text = @"Alpha Xi Delta National Convention 2015";
-    cell.detailTextLabel.text = @"Ends - Jul 4, 2015 : Boston, MA";
-    cell.backgroundColor = [UIColor colorWithRed:100.0/255.0 green:115.0/255.0 blue:130.0/255.0 alpha:1.0];
+    Guide *guide = _guides[indexPath.section][indexPath.row];
+    cell.textLabel.text = [guide name];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Ends - %@ : %@",[guide endDateString], [guide cityState]];
+    cell.backgroundColor = [UIColor whiteColor];
     
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    Guide *guide = _guides[indexPath.section][indexPath.row];
+    NSLog(@"%@ selected", [guide name]);
+    // Push detail view controller with guide
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
-    header.backgroundColor = [UIColor lightGrayColor];
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+    header.backgroundColor = [UIColor colorWithRed:0.0 green:0.5 blue:0.8 alpha:1.0];
     UILabel *title = [[UILabel alloc] initWithFrame:header.bounds];
-    title.text = @"July 01, 2015";
+    [title setTextColor:[UIColor blackColor]];
+    [title setTextAlignment:NSTextAlignmentCenter];
+    Guide *guide = _guides[section][0];
+    title.text = [guide endDateString];
     [header addSubview:title];
     
     return header;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
+    return 70;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 20;
+    return 40;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0;
 }
 
+#pragma mark - Networking
+
+- (void) getGuides {
+    
+    // Animate Refresh Control
+    [self animateRefreshControl];
+    
+    // GET the Guides list
+    NSString *urlString = @"https://www.guidebook.com/service/v2/upcomingGuides/";
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *responseDict = responseObject;
+            NSArray *dataArray = [responseDict objectForKey:@"data"];
+            NSMutableArray *guides = [NSMutableArray array];
+            
+            for (NSDictionary *dataDict in dataArray) {
+                
+                NSString *objType = [dataDict objectForKey:@"objType"];
+                if ([objType isEqualToString:@"guide"]) {
+                    NSDate *startDate = [self dateFromString:[dataDict objectForKey:@"startDate"]];
+                    NSDate *endDate = [self dateFromString:[dataDict objectForKey:@"endDate"]];
+                    NSString *name = [dataDict objectForKey:@"name"];
+                    
+                    NSDictionary *venueDict = [dataDict objectForKey:@"venue"];
+                    NSString *city = [venueDict objectForKey:@"city"];
+                    NSString *state = [venueDict objectForKey:@"state"];
+                    Guide *guide = [[Guide alloc] initWithName:name
+                                                          city:city
+                                                         state:state
+                                                     startDate:startDate
+                                                       endDate:endDate];
+                    [guides addObject:guide];
+                }
+            }
+            _guides = [self separatedGuidesFrom:[guides copy]];
+            [self updateGUIWithProcessInfo];
+        }
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+}
+
+- (NSArray *)separatedGuidesFrom:(NSArray *)array {
+    NSMutableDictionary *sections = [NSMutableDictionary dictionary];
+    
+    for (Guide *guide in array) {
+        NSString *dateString = [guide endDateString];
+        NSMutableArray *sectionArray = sections[dateString];
+        if (!sectionArray) {
+            sectionArray = [NSMutableArray array];
+            sections[dateString] = sectionArray;
+        }
+        
+        [sectionArray addObject:guide];
+    }
+    
+    NSMutableArray *guides = [NSMutableArray array];
+    for (id key in sections) {
+        [guides addObject:sections[key]];
+    }
+    
+    NSArray *sortedGuides;
+    sortedGuides = [guides sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSDate *first = [(Guide *)a[0] endDate];
+        NSDate *second = [(Guide *)b[0] endDate];
+        return [first compare:second];
+    }];
+    
+    return sortedGuides;
+}
+
+- (NSDate *)dateFromString:(NSString *)string {
+    NSDateFormatter *dateFormatter = [[GBDateFormatter sharedInstance] dateFormatter];
+    NSDate *date = [dateFormatter dateFromString:string];
+    return date;
+}
 
 @end
