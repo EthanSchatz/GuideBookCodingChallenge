@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GuideBookViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    GuideBookViewController *viewController = [GuideBookViewController GuideBookViewController];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.window setRootViewController:viewController];
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

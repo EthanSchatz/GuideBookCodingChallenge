@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  GuideBookViewController.h
 //  GuideBookChallenge
 //
 //  Created by everis on 8/25/16.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface GuideBookViewController : UIViewController
 
++ (GuideBookViewController *) GuideBookViewController;
 
 @end
-
