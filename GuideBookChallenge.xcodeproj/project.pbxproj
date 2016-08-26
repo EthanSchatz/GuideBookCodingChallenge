@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CEADE8744CF43A88AF49EC7 /* libPods-GuideBookChallenge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC135736F45A2EDECBB28DA /* libPods-GuideBookChallenge.a */; };
 		9AE137F11D6F437000EBEDFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE137F01D6F437000EBEDFE /* main.m */; };
 		9AE137F41D6F437100EBEDFE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE137F31D6F437100EBEDFE /* AppDelegate.m */; };
 		9AE137FC1D6F437100EBEDFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AE137FB1D6F437100EBEDFE /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D34C6D3D2801E6ACCAC1DF7 /* Pods-GuideBookChallenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GuideBookChallenge.release.xcconfig"; path = "Pods/Target Support Files/Pods-GuideBookChallenge/Pods-GuideBookChallenge.release.xcconfig"; sourceTree = "<group>"; };
 		9AE137EC1D6F437000EBEDFE /* GuideBookChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuideBookChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AE137F01D6F437000EBEDFE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9AE137F21D6F437100EBEDFE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -54,6 +56,8 @@
 		9AE1382C1D6F55D500EBEDFE /* GuideBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideBookViewController.xib; sourceTree = "<group>"; };
 		9AE1382F1D6F84EB00EBEDFE /* Guide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Guide.h; sourceTree = "<group>"; };
 		9AE138301D6F84EB00EBEDFE /* Guide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Guide.m; sourceTree = "<group>"; };
+		DDC135736F45A2EDECBB28DA /* libPods-GuideBookChallenge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GuideBookChallenge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F972417A3D64CBC53D601796 /* Pods-GuideBookChallenge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GuideBookChallenge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GuideBookChallenge/Pods-GuideBookChallenge.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CEADE8744CF43A88AF49EC7 /* libPods-GuideBookChallenge.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +86,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A70EDBAFD326368821C8BB4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DDC135736F45A2EDECBB28DA /* libPods-GuideBookChallenge.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9AE137E31D6F437000EBEDFE = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +101,8 @@
 				9AE138081D6F437100EBEDFE /* GuideBookChallengeTests */,
 				9AE138131D6F437100EBEDFE /* GuideBookChallengeUITests */,
 				9AE137ED1D6F437000EBEDFE /* Products */,
+				F94E0E05028E801022DACBF6 /* Pods */,
+				2A70EDBAFD326368821C8BB4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,6 +176,15 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
+		F94E0E05028E801022DACBF6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F972417A3D64CBC53D601796 /* Pods-GuideBookChallenge.debug.xcconfig */,
+				2D34C6D3D2801E6ACCAC1DF7 /* Pods-GuideBookChallenge.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -168,9 +192,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9AE138191D6F437100EBEDFE /* Build configuration list for PBXNativeTarget "GuideBookChallenge" */;
 			buildPhases = (
+				4DFAFBDCF72BD029FF621A6A /* [CP] Check Pods Manifest.lock */,
 				9AE137E81D6F437000EBEDFE /* Sources */,
 				9AE137E91D6F437000EBEDFE /* Frameworks */,
 				9AE137EA1D6F437000EBEDFE /* Resources */,
+				F1F2DB98A2A812042951CFA1 /* [CP] Embed Pods Frameworks */,
+				99E893D037178A94A5603FD5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -285,6 +312,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4DFAFBDCF72BD029FF621A6A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		99E893D037178A94A5603FD5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GuideBookChallenge/Pods-GuideBookChallenge-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F1F2DB98A2A812042951CFA1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GuideBookChallenge/Pods-GuideBookChallenge-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9AE137E81D6F437000EBEDFE /* Sources */ = {
@@ -427,6 +502,7 @@
 		};
 		9AE1381A1D6F437100EBEDFE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F972417A3D64CBC53D601796 /* Pods-GuideBookChallenge.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = GuideBookChallenge/Info.plist;
@@ -438,6 +514,7 @@
 		};
 		9AE1381B1D6F437100EBEDFE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D34C6D3D2801E6ACCAC1DF7 /* Pods-GuideBookChallenge.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = GuideBookChallenge/Info.plist;
@@ -512,6 +589,7 @@
 				9AE1381B1D6F437100EBEDFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9AE1381C1D6F437100EBEDFE /* Build configuration list for PBXNativeTarget "GuideBookChallengeTests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +598,7 @@
 				9AE1381E1D6F437100EBEDFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9AE1381F1D6F437100EBEDFE /* Build configuration list for PBXNativeTarget "GuideBookChallengeUITests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +607,7 @@
 				9AE138211D6F437100EBEDFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
