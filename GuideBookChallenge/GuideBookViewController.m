@@ -56,6 +56,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)displayWebViewControllerWithGuide:(Guide *)guide {
+    NSString *urlString = [guide urlString];
+    NSURL *url = [NSURL URLWithString:urlString];
+    UIViewController *webViewController = [[UIViewController alloc] init];
+    webViewController.title = [guide name];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:webViewController.view.frame];
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+    [webViewController.view addSubview:webView];
+    [self.navigationController pushViewController:webViewController animated:YES];
+}
+
 #pragma mark - Table view data source
 
 - (void) updateGUIWithProcessInfo {
@@ -109,6 +120,7 @@
     Guide *guide = _guides[indexPath.section][indexPath.row];
     NSLog(@"%@ selected", [guide name]);
     // Push detail view controller with guide
+    [self displayWebViewControllerWithGuide:guide];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -162,6 +174,8 @@
                     NSDate *endDate = [self dateFromString:[dataDict objectForKey:@"endDate"]];
                     NSString *name = [dataDict objectForKey:@"name"];
                     NSString *iconURLString = [dataDict objectForKey:@"icon"];
+                    NSString *urlString = [dataDict objectForKey:@"url"];
+                    BOOL isPublic = [[dataDict objectForKey:@"login_required"] boolValue];
                     
                     NSDictionary *venueDict = [dataDict objectForKey:@"venue"];
                     NSString *city = [venueDict objectForKey:@"city"];
@@ -171,7 +185,9 @@
                                                          state:state
                                                      startDate:startDate
                                                        endDate:endDate
-                                                 iconURLString:iconURLString];
+                                                 iconURLString:iconURLString
+                                                     urlString:urlString
+                                                      isPublic:isPublic];
                     [guides addObject:guide];
                 }
             }

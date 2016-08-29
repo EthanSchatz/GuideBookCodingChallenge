@@ -22,6 +22,10 @@
 
 @property (nonatomic, readonly) NSString *iconURLString;
 
+@property (nonatomic, readonly) NSString *urlString;
+
+@property (nonatomic, readonly) BOOL isPublic;
+
 - (NSString *)name;
 
 - (NSString *)city;
@@ -39,6 +43,8 @@
                    state:(NSString *) state
                startDate:(NSDate *) startDate
                  endDate:(NSDate *) endDate
-                 iconURLString:(NSString *)iconURLString;
+                 iconURLString:(NSString *)iconURLString
+               urlString:(NSString *)urlString
+                isPublic:(BOOL)isPublic;
 
 @end

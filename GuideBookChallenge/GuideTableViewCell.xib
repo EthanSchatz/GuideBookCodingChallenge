@@ -11,19 +11,19 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="84.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="00P-gd-CIP">
-                        <rect key="frame" x="76" y="15" width="236" height="56"/>
+                        <rect key="frame" x="76" y="5" width="236" height="75"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="NA LCS Summer Finals 2016 - Riot Games" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="ubn-DK-DoK">
-                                <rect key="frame" x="0.0" y="0.0" width="236" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Janssen GCC Countrie's September Cycle Meeting 2016" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="ubn-DK-DoK">
+                                <rect key="frame" x="0.0" y="3" width="181" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="csx-SJ-PLu"/>
                                     <constraint firstAttribute="height" constant="50" id="tFM-Px-16w"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
@@ -34,22 +34,44 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Ends - Aug 28, 2016 : Los Angeles, CA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="y0Q-OS-yby">
-                                <rect key="frame" x="0.0" y="41" width="236" height="15"/>
+                                <rect key="frame" x="0.0" y="57" width="181" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Public" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GVz-r2-4LA">
+                                <rect key="frame" x="186" y="29" width="50" height="18"/>
+                                <color key="backgroundColor" red="0.94699035234899331" green="0.94303166946308725" blue="0.83971266778523479" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="5Hw-pf-p2R"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.73725490196078436" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="y0Q-OS-yby" secondAttribute="bottom" id="70z-IN-tlg"/>
+                            <constraint firstItem="GVz-r2-4LA" firstAttribute="leading" secondItem="y0Q-OS-yby" secondAttribute="trailing" constant="5" id="1Ly-c5-gck"/>
+                            <constraint firstAttribute="bottom" secondItem="y0Q-OS-yby" secondAttribute="bottom" constant="3" id="70z-IN-tlg"/>
                             <constraint firstItem="y0Q-OS-yby" firstAttribute="leading" secondItem="00P-gd-CIP" secondAttribute="leading" id="D60-oK-TQD"/>
                             <constraint firstAttribute="trailing" secondItem="ubn-DK-DoK" secondAttribute="trailing" id="DC6-4W-0No"/>
-                            <constraint firstItem="ubn-DK-DoK" firstAttribute="top" secondItem="00P-gd-CIP" secondAttribute="top" id="VZM-Xg-5Wu"/>
+                            <constraint firstItem="GVz-r2-4LA" firstAttribute="leading" secondItem="ubn-DK-DoK" secondAttribute="trailing" constant="5" id="LeY-lf-lAu"/>
+                            <constraint firstItem="ubn-DK-DoK" firstAttribute="top" secondItem="00P-gd-CIP" secondAttribute="top" constant="3" id="VZM-Xg-5Wu"/>
                             <constraint firstAttribute="trailing" secondItem="y0Q-OS-yby" secondAttribute="trailing" id="VwJ-kN-oZ1"/>
+                            <constraint firstItem="GVz-r2-4LA" firstAttribute="centerY" secondItem="00P-gd-CIP" secondAttribute="centerY" id="YnF-fg-z2R"/>
                             <constraint firstItem="ubn-DK-DoK" firstAttribute="leading" secondItem="00P-gd-CIP" secondAttribute="leading" id="nWS-qW-T0i"/>
+                            <constraint firstAttribute="trailing" secondItem="GVz-r2-4LA" secondAttribute="trailing" id="tTG-Me-4Gm"/>
                             <constraint firstItem="ubn-DK-DoK" firstAttribute="bottom" secondItem="y0Q-OS-yby" secondAttribute="top" id="vML-Fm-E5Y"/>
+                            <constraint firstAttribute="trailing" secondItem="ubn-DK-DoK" secondAttribute="trailing" constant="59" id="xxg-MP-Z6G"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DC6-4W-0No"/>
+                                <exclude reference="xxg-MP-Z6G"/>
+                                <exclude reference="VwJ-kN-oZ1"/>
+                            </mask>
+                        </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="al3-i9-TIS">
                         <rect key="frame" x="0.0" y="84" width="320" height="1"/>
@@ -100,6 +122,7 @@
             <connections>
                 <outlet property="detailLabel" destination="y0Q-OS-yby" id="AaV-8W-OX1"/>
                 <outlet property="iconImageView" destination="9zw-Gp-5pj" id="eLY-xc-E6O"/>
+                <outlet property="privacyLabel" destination="GVz-r2-4LA" id="zQk-LV-slz"/>
                 <outlet property="titleLabel" destination="ubn-DK-DoK" id="LIU-sf-ryj"/>
             </connections>
             <point key="canvasLocation" x="643" y="322.5"/>

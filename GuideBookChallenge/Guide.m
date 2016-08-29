@@ -23,6 +23,10 @@
 
 @property (nonatomic, readwrite) NSString *iconURLString;
 
+@property (nonatomic, readwrite) NSString *urlString;
+
+@property (nonatomic, readwrite) BOOL isPublic;
+
 @end
 
 @implementation Guide
@@ -32,7 +36,9 @@
                    state:(NSString *) state
                startDate:(NSDate *) startDate
                  endDate:(NSDate *) endDate
-                 iconURLString:(NSString *)iconURLString {
+                 iconURLString:(NSString *)iconURLString
+               urlString:(NSString *)urlString
+                isPublic:(BOOL)isPublic {
     
     Guide *result = [[Guide alloc] init];
     result.name = name;
@@ -41,6 +47,8 @@
     result.startDate = startDate;
     result.endDate = endDate;
     result.iconURLString = iconURLString;
+    result.urlString = [NSString stringWithFormat:@"https://guidebook.com%@", urlString];
+    result.isPublic = isPublic;
     
     return result;
 }
