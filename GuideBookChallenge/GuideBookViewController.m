@@ -16,7 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic) NSArray *guides;
+@property (nonatomic) NSMutableArray *guides;
 
 @property (nonatomic) UIRefreshControl *refreshControl;
 
@@ -111,8 +111,34 @@
     }
     Guide *guide = _guides[indexPath.section][indexPath.row];
     [cell configureCellWithGuide:guide];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+    [view setBackgroundColor:[UIColor redColor]];
+    cell.editingAccessoryView = view;
     
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableview canEditRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    return true;
+}
+
+- (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSInteger row = [indexPath row];
+        NSInteger section = [indexPath section];
+        if (section < _guides.count) {
+            NSMutableArray *sectionArray = [_guides objectAtIndex:section];
+            if (row < sectionArray.count) {
+                [sectionArray removeObjectAtIndex:row];
+                if (sectionArray.count == 0) {
+                    [_guides removeObjectAtIndex:section];
+                }
+                [_tableView reloadData];
+            }
+        }
+    }
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -200,7 +226,7 @@
     
 }
 
-- (NSArray *)separatedGuidesFrom:(NSArray *)array {
+- (NSMutableArray *)separatedGuidesFrom:(NSArray *)array {
     NSMutableDictionary *sections = [NSMutableDictionary dictionary];
     
     for (Guide *guide in array) {
@@ -222,7 +248,7 @@
             NSDate *second = [(Guide *)b endDate];
             return [first compare:second];
         }];
-        [guides addObject:sortedSection];
+        [guides addObject:[sortedSection mutableCopy]];
     }
     
     NSArray *sortedGuides;
@@ -233,7 +259,7 @@
     }];
     
     
-    return sortedGuides;
+    return [sortedGuides mutableCopy];
 }
 
 - (NSDate *)dateFromString:(NSString *)string {
