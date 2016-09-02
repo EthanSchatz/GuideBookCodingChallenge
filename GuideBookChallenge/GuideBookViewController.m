@@ -7,18 +7,20 @@
 //
 
 #import "GuideBookViewController.h"
-#import "AFNetworking.h"
 #import "Guide.h"
-#import "GBDateFormatter.h"
 #import "GuideTableViewCell.h"
+#import "GBDateFormatter.h"
+#import "GBAPI.h"
 
-@interface GuideBookViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface GuideBookViewController () <UITableViewDelegate, UITableViewDataSource, GBAPIDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic) NSMutableArray *guides;
 
 @property (nonatomic) UIRefreshControl *refreshControl;
+
+@property (nonatomic, readonly) GBAPI *GBapi;
 
 @end
 
@@ -35,7 +37,10 @@
     [super viewDidLoad];
     
     [self setTitle:@"Guides"];
-    [self getGuides];
+    
+    _GBapi = [[GBAPI alloc] init];
+    [_GBapi setDelegate:self];
+    [self startGuideProcess];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame: CGRectZero];
@@ -43,11 +48,12 @@
     
     UINib *nib = [UINib nibWithNibName:@"GuideTableViewCell" bundle:nil];
     [_tableView registerNib:nib forCellReuseIdentifier:[GuideTableViewCell reuseIdentifier]];
+    [_tableView setEstimatedRowHeight:70.0];
     
     _refreshControl = [[UIRefreshControl alloc] init];
     _refreshControl.backgroundColor = [UIColor colorWithRed:0.0 green:0.3 blue:0.6 alpha:1.0];
     _refreshControl.tintColor = [UIColor whiteColor];
-    [_refreshControl addTarget:self action:@selector(getGuides) forControlEvents:UIControlEventValueChanged];
+    [_refreshControl addTarget:self action:@selector(startGuideProcess) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:_refreshControl];
 }
 
@@ -164,7 +170,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 70;
+    return UITableViewAutomaticDimension;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -175,97 +181,25 @@
     return 0;
 }
 
-#pragma mark - Networking
-
-- (void) getGuides {
+- (void)startGuideProcess {
     
     // Animate Refresh Control
     [self animateRefreshControl];
     
-    // GET the Guides list
-    NSString *urlString = @"https://www.guidebook.com/service/v2/upcomingGuides/";
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        if ([responseObject isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *responseDict = responseObject;
-            NSArray *dataArray = [responseDict objectForKey:@"data"];
-            NSMutableArray *guides = [NSMutableArray array];
-            
-            for (NSDictionary *dataDict in dataArray) {
-                
-                NSString *objType = [dataDict objectForKey:@"objType"];
-                if ([objType isEqualToString:@"guide"]) {
-                    NSDate *startDate = [self dateFromString:[dataDict objectForKey:@"startDate"]];
-                    NSDate *endDate = [self dateFromString:[dataDict objectForKey:@"endDate"]];
-                    NSString *name = [dataDict objectForKey:@"name"];
-                    NSString *iconURLString = [dataDict objectForKey:@"icon"];
-                    NSString *urlString = [dataDict objectForKey:@"url"];
-                    BOOL isPublic = [[dataDict objectForKey:@"login_required"] boolValue];
-                    
-                    NSDictionary *venueDict = [dataDict objectForKey:@"venue"];
-                    NSString *city = [venueDict objectForKey:@"city"];
-                    NSString *state = [venueDict objectForKey:@"state"];
-                    Guide *guide = [[Guide alloc] initWithName:name
-                                                          city:city
-                                                         state:state
-                                                     startDate:startDate
-                                                       endDate:endDate
-                                                 iconURLString:iconURLString
-                                                     urlString:urlString
-                                                      isPublic:isPublic];
-                    [guides addObject:guide];
-                }
-            }
-            _guides = [self separatedGuidesFrom:[guides copy]];
-            [self updateGUIWithProcessInfo];
-        }
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
+    [_GBapi getGuides];
     
 }
 
-- (NSMutableArray *)separatedGuidesFrom:(NSArray *)array {
-    NSMutableDictionary *sections = [NSMutableDictionary dictionary];
-    
-    for (Guide *guide in array) {
-        NSString *dateString = [guide startDateString];
-        NSMutableArray *sectionArray = sections[dateString];
-        if (!sectionArray) {
-            sectionArray = [NSMutableArray array];
-            sections[dateString] = sectionArray;
-        }
-        
-        [sectionArray addObject:guide];
-    }
-    
-    NSMutableArray *guides = [NSMutableArray array];
-    for (id key in sections) {
-        NSMutableArray *section = sections[key];
-        NSArray *sortedSection = [section sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-            NSDate *first = [(Guide *)a endDate];
-            NSDate *second = [(Guide *)b endDate];
-            return [first compare:second];
-        }];
-        [guides addObject:[sortedSection mutableCopy]];
-    }
-    
-    NSArray *sortedGuides;
-    sortedGuides = [guides sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSDate *first = [(Guide *)a[0] startDate];
-        NSDate *second = [(Guide *)b[0] startDate];
-        return [first compare:second];
-    }];
-    
-    
-    return [sortedGuides mutableCopy];
+#pragma mark - GBAPI Delegate Methods
+
+- (void)listUpdatedSuccessfully:(NSMutableArray *)list {
+    // Handle Success
+    _guides = list;
+    [self updateGUIWithProcessInfo];
 }
 
-- (NSDate *)dateFromString:(NSString *)string {
-    NSDateFormatter *dateFormatter = [[GBDateFormatter sharedInstance] dateFormatter];
-    NSDate *date = [dateFormatter dateFromString:string];
-    return date;
+- (void)listFailedToUpdate:(GBAPI *)api {
+    // Handle Failure
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E420D271D78D1DC0063C6F9 /* GBAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E420D261D78D1DC0063C6F9 /* GBAPI.m */; };
 		2EBC78F11D6FD8BC008A00D9 /* GBDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBC78F01D6FD8BC008A00D9 /* GBDateFormatter.m */; };
 		2EBC78F51D6FDE09008A00D9 /* GuideTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBC78F31D6FDE09008A00D9 /* GuideTableViewCell.m */; };
 		2EBC78F61D6FDE09008A00D9 /* GuideTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EBC78F41D6FDE09008A00D9 /* GuideTableViewCell.xib */; };
@@ -41,6 +42,8 @@
 
 /* Begin PBXFileReference section */
 		2D34C6D3D2801E6ACCAC1DF7 /* Pods-GuideBookChallenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GuideBookChallenge.release.xcconfig"; path = "Pods/Target Support Files/Pods-GuideBookChallenge/Pods-GuideBookChallenge.release.xcconfig"; sourceTree = "<group>"; };
+		2E420D251D78D1DC0063C6F9 /* GBAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBAPI.h; sourceTree = "<group>"; };
+		2E420D261D78D1DC0063C6F9 /* GBAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBAPI.m; sourceTree = "<group>"; };
 		2EBC78EF1D6FD8BC008A00D9 /* GBDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBDateFormatter.h; sourceTree = "<group>"; };
 		2EBC78F01D6FD8BC008A00D9 /* GBDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBDateFormatter.m; sourceTree = "<group>"; };
 		2EBC78F21D6FDE09008A00D9 /* GuideTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideTableViewCell.h; sourceTree = "<group>"; };
@@ -102,6 +105,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2E420D241D78D1BA0063C6F9 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				2E420D251D78D1DC0063C6F9 /* GBAPI.h */,
+				2E420D261D78D1DC0063C6F9 /* GBAPI.m */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		2EBC78F71D6FDE0F008A00D9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +151,7 @@
 			children = (
 				9AE137F21D6F437100EBEDFE /* AppDelegate.h */,
 				9AE137F31D6F437100EBEDFE /* AppDelegate.m */,
+				2E420D241D78D1BA0063C6F9 /* API */,
 				2EBC78F71D6FDE0F008A00D9 /* Views */,
 				9AE138331D6F84FB00EBEDFE /* ViewControllers */,
 				9AE138321D6F84F200EBEDFE /* Models */,
@@ -389,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EBC78F51D6FDE09008A00D9 /* GuideTableViewCell.m in Sources */,
+				2E420D271D78D1DC0063C6F9 /* GBAPI.m in Sources */,
 				9AE138311D6F84EB00EBEDFE /* Guide.m in Sources */,
 				9AE137F41D6F437100EBEDFE /* AppDelegate.m in Sources */,
 				9AE1382D1D6F55D500EBEDFE /* GuideBookViewController.m in Sources */,
